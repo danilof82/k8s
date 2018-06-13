@@ -1,0 +1,30 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      traefik.backend.loadbalancer.sticky: "true"
+    name: revisor-director-front
+    labels:
+      contexto: si
+      visibilidad: publico
+      location: revisor-director
+      tipo-proxy: complejo
+  spec:
+    ports:
+      # the port that this service should serve on
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      run: revisor-director-front
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    type: NodePort
+kind: List
+metadata: {}
+resourceVersion: ""
+selfLink: ""
