@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    traefik.backend.loadbalancer.sticky: "true"
+  creationTimestamp: null
+  labels:
+    contexto: si
+    location: revisor-director
+    tipo-proxy: complejo
+  name: revisor-director-front
+  selfLink: /api/v1/namespaces/default/services/revisor-director-front
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: revisor-director-front
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  type: NodePort
+status:
+  loadBalancer: {}
